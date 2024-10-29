@@ -1,6 +1,7 @@
-import {FunctionComponent} from "react";
-import {Todo} from "../models.ts";
+import {FunctionComponent, useState} from "react";
+import {initialState, Todo} from "../store/state.ts";
 import {TodoItem} from "./TodoItem.tsx";
+import {store} from "../store/store.ts";
 
 export type TodoListProps = {
     todos: Todo[],
@@ -8,9 +9,21 @@ export type TodoListProps = {
     deleteTodo: (id: number) => void
 }
 
-export const TodoList: FunctionComponent<TodoListProps> = (props) => (
-    <>
-        {props.todos.map(todo => (
-            <TodoItem todo={todo} toggleTodo={props.toggleTodo} deleteTodo={props.deleteTodo}/>))}
-    </>
-)
+export const TodoList: FunctionComponent = () => {
+
+    const [todos, setTodos] = useState<Todo[]>(initialState.todos)
+
+    store.subscribe(() => {
+        const state = store.getState();
+        setTodos(
+            state.todos.filter(
+                todo => todo.label.toLowerCase().includes(state.searchTerm.toLowerCase()))
+        )
+    })
+
+    return (<>
+        {todos.map(todo => (
+            <TodoItem todo={todo} />))}
+    </>)
+}
+

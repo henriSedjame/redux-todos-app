@@ -1,16 +1,17 @@
 import '../App.css'
 import {FunctionComponent, useRef} from "react";
+import {store} from "../store/store.ts";
 
 export type AddInputProps = {
     add: (value: string) => void
 }
 
-export const AddInput: FunctionComponent<AddInputProps> = (props) => {
+export const AddInput: FunctionComponent = () => {
     const todoLabelRef= useRef<HTMLInputElement>(null)
 
     const addTodo = () => {
         if (todoLabelRef.current && todoLabelRef.current.value.length >= 3) {
-            props.add(todoLabelRef.current.value)
+            store.dispatch({type: 'ADD_TODO', label: todoLabelRef.current.value})
             todoLabelRef.current.value = ''
         }
     }

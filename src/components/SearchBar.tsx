@@ -1,17 +1,18 @@
 import '../App.css'
 import {FunctionComponent, useRef} from "react";
+import {store} from "../store/store.ts";
 
 export type SearchBarProps = {
     search: (term: string) => void
 }
 
-export const SearchBar: FunctionComponent<SearchBarProps> = (props) => {
+export const SearchBar: FunctionComponent = () => {
 
     const searchTermsRef = useRef<HTMLInputElement>(null)
 
     const onSearch = () => {
         if (searchTermsRef.current) {
-            props.search(searchTermsRef.current.value)
+            store.dispatch({type: 'SEARCH_TODO', term: searchTermsRef.current.value})
         }
     }
 
