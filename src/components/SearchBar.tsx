@@ -1,6 +1,6 @@
 import '../App.css'
 import {FunctionComponent, useRef} from "react";
-import {store} from "../store/store.ts";
+import {actionDispatchers} from "../store/action-dispatchers.ts";
 
 export type SearchBarProps = {
     search: (term: string) => void
@@ -12,7 +12,7 @@ export const SearchBar: FunctionComponent = () => {
 
     const onSearch = () => {
         if (searchTermsRef.current) {
-            store.dispatch({type: 'SEARCH_TODO', term: searchTermsRef.current.value})
+            actionDispatchers.searchTodo(searchTermsRef.current.value)
         }
     }
 

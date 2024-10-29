@@ -1,6 +1,6 @@
 import '../App.css'
 import {FunctionComponent, useRef} from "react";
-import {store} from "../store/store.ts";
+import {actionDispatchers} from "../store/action-dispatchers.ts";
 
 export type AddInputProps = {
     add: (value: string) => void
@@ -11,7 +11,7 @@ export const AddInput: FunctionComponent = () => {
 
     const addTodo = () => {
         if (todoLabelRef.current && todoLabelRef.current.value.length >= 3) {
-            store.dispatch({type: 'ADD_TODO', label: todoLabelRef.current.value})
+            actionDispatchers.addTodo(todoLabelRef.current.value)
             todoLabelRef.current.value = ''
         }
     }

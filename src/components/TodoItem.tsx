@@ -1,7 +1,7 @@
 import '../App.css'
 import {Todo} from "../store/state.ts";
 import {FunctionComponent} from "react";
-import {store} from "../store/store.ts";
+import {actionDispatchers} from "../store/action-dispatchers.ts";
 
 export type TodoItemProps = {
     todo: Todo,
@@ -11,11 +11,11 @@ export type TodoItemProps = {
 export const TodoItem: FunctionComponent<TodoItemProps> = (props) => {
 
     const toggleTodo = () => {
-        store.dispatch({type: 'TOGGLE_TODO', id: props.todo.id})
+        actionDispatchers.toggleTodo(props.todo.id)
     }
 
     const deleteTodo = () => {
-        store.dispatch({type: 'DELETE_TODO', id: props.todo.id})
+        actionDispatchers.deleteTodo(props.todo.id)
     }
 
     return (
