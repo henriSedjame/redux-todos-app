@@ -1,5 +1,5 @@
 import {initialState, Todo} from "./state.ts";
-import {TodoActions} from "./actions.ts";
+import {createSlice} from "@reduxjs/toolkit";
 
 const addTodo = (state: Todo[]) => (label: string): Todo[] => ([...state, {
     id: state.length + 1,
@@ -16,24 +16,24 @@ const deleteTodo = (state: Todo[]) => (id: number): Todo[] => {
     return todos.map((todo, index) => ({...todo, id: index + 1}))
 }
 
-export const todoReducer = (state: Todo[] = initialState.todos, action: TodoActions) => {
-    switch (action.type) {
-        case 'ADD_TODO':
-            return addTodo(state)(action.label)
-        case 'TOGGLE_TODO':
-            return toggleTodo(state)(action.id)
-        case 'DELETE_TODO':
-            return deleteTodo(state)(action.id)
-        default:
-            return state
+export const todoSlice = createSlice({
+    name: 'todos',
+    initialState: initialState.todos,
+    reducers: {
+        addTodo: (state, action ) => addTodo(state)(action.payload),
+        toggleTodo: (state, action) => toggleTodo(state)(action.payload),
+        deleteTodo: (state, action) => deleteTodo(state)(action.payload)
     }
-}
+})
 
-export const searchReducer = (state: string = initialState.searchTerm , action: TodoActions) => {
-    switch (action.type) {
-        case 'SEARCH_TODO':
-            return action.term
-        default:
-            return state
+export const searchSlice = createSlice({
+    name: 'searchTerm',
+    initialState: initialState.searchTerm,
+    reducers: {
+        searchTodo: (_state, action) => action.payload
     }
-}
+})
+
+export const todosReducer = todoSlice.reducer
+
+export const searchReducer = searchSlice.reducer

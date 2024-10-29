@@ -1,8 +1,7 @@
 import '../App.css'
 import {Todo} from "../store/state.ts";
 import {FunctionComponent} from "react";
-import {bindActionCreators} from "redux";
-import {appDispatch} from "../store/hooks.ts";
+import {actionDispatchers} from "../store/action-dispatchers.ts";
 
 export type TodoItemProps = {
     todo: Todo,
@@ -10,17 +9,12 @@ export type TodoItemProps = {
 
 export const TodoItem: FunctionComponent<TodoItemProps> = (props) => {
 
-    const actions = bindActionCreators({
-        toggleTodo: (id: number) =>({type: 'TOGGLE_TODO', id}),
-        deleteTodo: (id: number) => ({type: 'DELETE_TODO', id})
-    }, appDispatch())
-
     const toggleTodo = () => {
-        actions.toggleTodo(props.todo.id)
+       actionDispatchers.toggleTodo(props.todo.id)
     }
 
     const deleteTodo = () => {
-        actions.deleteTodo(props.todo.id)
+       actionDispatchers.deleteTodo(props.todo.id)
     }
 
     return (

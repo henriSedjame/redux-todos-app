@@ -22,3 +22,11 @@ Install devtools
 ```shell
  bun add react-redux
 ```
+
+## Redux-Toolkit
+
+#### Installation
+
+```shell
+ bun add @reduxjs/toolkit
+```

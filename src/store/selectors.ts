@@ -1,5 +1,5 @@
 import {AppState} from "./state.ts";
-import {createSelector} from "reselect";
+import {createSelector} from "@reduxjs/toolkit";
 
 export const selectTodos = (state: AppState) => state.todos
 

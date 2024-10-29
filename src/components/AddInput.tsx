@@ -1,15 +1,14 @@
 import '../App.css'
 import {FunctionComponent, useRef} from "react";
-import {appDispatch} from "../store/hooks.ts";
+import {actionDispatchers} from "../store/action-dispatchers.ts";
+
 
 export const AddInput: FunctionComponent = () => {
-    const todoLabelRef= useRef<HTMLInputElement>(null)
-
-    const dispatch = appDispatch()
+    const todoLabelRef = useRef<HTMLInputElement>(null)
 
     const addTodo = () => {
         if (todoLabelRef.current && todoLabelRef.current.value.length >= 3) {
-            dispatch({type: 'ADD_TODO', label: todoLabelRef.current.value})
+            actionDispatchers.addTodo(todoLabelRef.current.value)
             todoLabelRef.current.value = ''
         }
     }

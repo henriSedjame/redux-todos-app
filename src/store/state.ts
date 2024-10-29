@@ -20,11 +20,6 @@ export const initialState: AppState = {
             id: 2,
             label: 'Learn React',
             completed: true
-        },
-        {
-            id: 3,
-            label: 'Learn Redux',
-            completed: false
         }
     ],
     searchTerm: ''

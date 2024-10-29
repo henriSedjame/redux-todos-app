@@ -1,16 +1,14 @@
 import '../App.css'
 import {FunctionComponent, useRef} from "react";
-import {appDispatch} from "../store/hooks.ts";
+import {actionDispatchers} from "../store/action-dispatchers.ts";
 
 export const SearchBar: FunctionComponent = () => {
 
     const searchTermsRef = useRef<HTMLInputElement>(null)
 
-    const dispatch = appDispatch()
-
     const onSearch = () => {
         if (searchTermsRef.current) {
-            dispatch({type: 'SEARCH_TODO', term: searchTermsRef.current.value})
+            actionDispatchers.searchTodo(searchTermsRef.current.value)
         }
     }
 
