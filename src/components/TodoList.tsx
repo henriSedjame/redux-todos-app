@@ -11,6 +11,6 @@ export type TodoListProps = {
 export const TodoList: FunctionComponent<TodoListProps> = (props) => (
     <>
         {props.todos.map(todo => (
-            <TodoItem todo={todo} toggleTodo={props.toggleTodo} deleteTodo={props.deleteTodo}/>))}
+            <TodoItem key={todo.id} todo={todo} toggleTodo={props.toggleTodo} deleteTodo={props.deleteTodo}/>))}
     </>
 )
