@@ -1,25 +1,12 @@
 import {FunctionComponent} from "react";
-import {AppState, Todo} from "../store/state.ts";
-import {ConnectedTodoItem} from "./TodoItem.tsx";
-import {connect, MapStateToPropsParam} from "react-redux";
+import {appSelector} from "../store/hooks.ts";
+import {selectFilteredTodos} from "../store/selectors.ts";
+import {TodoItem} from "./TodoItem.tsx";
 
-export type TodoListProps = {
-    todos: Todo[],
-}
-
-export const TodoList: FunctionComponent<TodoListProps> = (props) => {
-
+export const TodoList: FunctionComponent = () => {
+    const todos = appSelector(selectFilteredTodos)
     return (<>
-        {props.todos.map(todo => (
-            <ConnectedTodoItem key={todo.id} todo={todo} />))}
+        {todos.map(todo => (
+            <TodoItem key={todo.id} todo={todo} />))}
     </>)
 }
-
-
-const mapStateToProps : MapStateToPropsParam<TodoListProps, unknown, AppState> = (state) => ({
-    todos: state.todos.filter(todo => todo.label.toLowerCase().includes(state.searchTerm.toLowerCase()))
-})
-
-export const ConnectedTodoList = connect(
-    mapStateToProps
-)(TodoList)
