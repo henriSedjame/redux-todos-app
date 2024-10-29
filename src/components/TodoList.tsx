@@ -8,7 +8,6 @@ export type TodoListProps = {
     toggleTodo: (id: number) => void
     deleteTodo: (id: number) => void
 }
-
 export const TodoList: FunctionComponent = () => {
 
     const [todos, setTodos] = useState<Todo[]>(initialState.todos)
@@ -23,7 +22,6 @@ export const TodoList: FunctionComponent = () => {
 
     return (<>
         {todos.map(todo => (
-            <TodoItem todo={todo} />))}
+            <TodoItem key={todo.id} todo={todo} />))}
     </>)
 }
-
