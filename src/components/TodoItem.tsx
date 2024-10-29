@@ -1,21 +1,27 @@
 import '../App.css'
-import {Todo} from "../store/state.ts";
+import {AppState, Todo} from "../store/state.ts";
 import {FunctionComponent} from "react";
-import {actionDispatchers} from "../store/action-dispatchers.ts";
+import {connect, MapDispatchToPropsParam} from "react-redux";
+import {Dispatch} from "redux";
+import {TodoActions} from "../store/actions.ts";
 
 export type TodoItemProps = {
     todo: Todo,
-
 }
 
-export const TodoItem: FunctionComponent<TodoItemProps> = (props) => {
+export type TodoItemDispatchProps = {
+    toggleTodo: (id: number) => void,
+    deleteTodo: (id: number) => void,
+}
+
+export const TodoItem: FunctionComponent<TodoItemProps & TodoItemDispatchProps> = (props) => {
 
     const toggleTodo = () => {
-        actionDispatchers.toggleTodo(props.todo.id)
+        props.toggleTodo(props.todo.id)
     }
 
     const deleteTodo = () => {
-        actionDispatchers.deleteTodo(props.todo.id)
+        props.deleteTodo(props.todo.id)
     }
 
     return (
@@ -28,3 +34,13 @@ export const TodoItem: FunctionComponent<TodoItemProps> = (props) => {
         </>
     )
 }
+
+const mapDispatchToProps: MapDispatchToPropsParam<TodoItemDispatchProps, TodoItemProps> = (dispatch : Dispatch<TodoActions>) => ({
+    toggleTodo: (id: number) => dispatch({type: 'TOGGLE_TODO', id}),
+    deleteTodo: (id: number) => dispatch({type: 'DELETE_TODO', id})
+})
+
+export const ConnectedTodoItem = connect<unknown, TodoItemDispatchProps, TodoItemProps, AppState>(
+    null,
+    mapDispatchToProps
+)(TodoItem)

@@ -1,7 +1,7 @@
 import './App.css'
-import {TodoList} from "./components/TodoList.tsx";
-import {SearchBar} from "./components/SearchBar.tsx";
-import {AddInput} from "./components/AddInput.tsx";
+import {ConnectedTodoList} from "./components/TodoList.tsx";
+import {ConnectedSearchBar} from "./components/SearchBar.tsx";
+import {ConnectedAddInput} from "./components/AddInput.tsx";
 import {Title} from "./components/Title.tsx";
 
 
@@ -11,11 +11,11 @@ function App() {
         <>
             <Title/>
 
-            <SearchBar/>
+            <ConnectedSearchBar/>
 
-            <TodoList/>
+            <ConnectedTodoList/>
 
-            <AddInput/>
+            <ConnectedAddInput />
         </>
     )
 }

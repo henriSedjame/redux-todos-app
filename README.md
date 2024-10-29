@@ -1,6 +1,6 @@
 ## FORMATION REDUX
 
-### Redux core
+## Redux core
 
 
 #### Installation
@@ -15,3 +15,10 @@ Install devtools
     bun add redux-devtools-extension
 ```
 
+## React-Redux
+
+#### Installation
+
+```shell
+ bun add react-redux
+```

@@ -1,27 +1,25 @@
-import {FunctionComponent, useState} from "react";
-import {initialState, Todo} from "../store/state.ts";
-import {TodoItem} from "./TodoItem.tsx";
-import {store} from "../store/store.ts";
+import {FunctionComponent} from "react";
+import {AppState, Todo} from "../store/state.ts";
+import {ConnectedTodoItem} from "./TodoItem.tsx";
+import {connect, MapStateToPropsParam} from "react-redux";
 
 export type TodoListProps = {
     todos: Todo[],
-    toggleTodo: (id: number) => void
-    deleteTodo: (id: number) => void
 }
-export const TodoList: FunctionComponent = () => {
 
-    const [todos, setTodos] = useState<Todo[]>(initialState.todos)
-
-    store.subscribe(() => {
-        const state = store.getState();
-        setTodos(
-            state.todos.filter(
-                todo => todo.label.toLowerCase().includes(state.searchTerm.toLowerCase()))
-        )
-    })
+export const TodoList: FunctionComponent<TodoListProps> = (props) => {
 
     return (<>
-        {todos.map(todo => (
-            <TodoItem key={todo.id} todo={todo} />))}
+        {props.todos.map(todo => (
+            <ConnectedTodoItem key={todo.id} todo={todo} />))}
     </>)
 }
+
+
+const mapStateToProps : MapStateToPropsParam<TodoListProps, unknown, AppState> = (state) => ({
+    todos: state.todos.filter(todo => todo.label.toLowerCase().includes(state.searchTerm.toLowerCase()))
+})
+
+export const ConnectedTodoList = connect(
+    mapStateToProps
+)(TodoList)

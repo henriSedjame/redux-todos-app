@@ -1,18 +1,20 @@
 import '../App.css'
 import {FunctionComponent, useRef} from "react";
-import {actionDispatchers} from "../store/action-dispatchers.ts";
+import {connect, MapDispatchToPropsParam} from "react-redux";
+import {Dispatch} from "redux";
+import {TodoActions} from "../store/actions.ts";
 
 export type SearchBarProps = {
     search: (term: string) => void
 }
 
-export const SearchBar: FunctionComponent = () => {
+export const SearchBar: FunctionComponent<SearchBarProps> = (props) => {
 
     const searchTermsRef = useRef<HTMLInputElement>(null)
 
     const onSearch = () => {
         if (searchTermsRef.current) {
-            actionDispatchers.searchTodo(searchTermsRef.current.value)
+            props.search(searchTermsRef.current.value)
         }
     }
 
@@ -24,3 +26,12 @@ export const SearchBar: FunctionComponent = () => {
         </div>
     </>)
 }
+
+const mapDispatchToProps :MapDispatchToPropsParam<SearchBarProps, unknown> = (dispatch: Dispatch<TodoActions>) => ({
+    search: (term: string) => dispatch({type: 'SEARCH_TODO', term})
+})
+
+export const ConnectedSearchBar = connect(
+    null,
+    mapDispatchToProps
+)(SearchBar)
