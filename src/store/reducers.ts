@@ -1,35 +1,22 @@
-import {Reducer} from "redux";
-import {AppState, initialState} from "./state.ts";
+import {initialState, Todo} from "./state.ts";
 import {TodoActions} from "./actions.ts";
 
-const addTodo = (state: AppState) => (label: string) : AppState  => ({
-    ...state,
-    todos: [
-        ...state.todos,
-        {
-            id: state.todos.length + 1,
-            label: label,
-            completed: false
-        }
-    ]
-})
+const addTodo = (state: Todo[]) => (label: string): Todo[] => ([...state, {
+    id: state.length + 1,
+    label: label,
+    completed: false
+}])
 
-const toggleTodo = (state: AppState) => (id: number) : AppState => ({
-    ...state,
-    todos: state.todos.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo)
-})
+const toggleTodo = (state: Todo[]) => (id: number): Todo[] => (
+    state.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo)
+)
 
-const deleteTodo = (state: AppState) => (id: number) : AppState => ({
-    ...state,
-    todos: state.todos.filter(todo => todo.id !== id)
-})
+const deleteTodo = (state: Todo[]) => (id: number): Todo[] => {
+    const todos = state.filter(todo => todo.id !== id)
+    return todos.map((todo, index) => ({...todo, id: index + 1}))
+}
 
-const searchTodo = (state: AppState) => (term: string) : AppState => ({
-    ...state,
-    searchTerm: term
-})
-
-export const todosReducer : Reducer<AppState, TodoActions> = (state = initialState, action) => {
+export const todoReducer = (state: Todo[] = initialState.todos, action: TodoActions) => {
     switch (action.type) {
         case 'ADD_TODO':
             return addTodo(state)(action.label)
@@ -37,8 +24,15 @@ export const todosReducer : Reducer<AppState, TodoActions> = (state = initialSta
             return toggleTodo(state)(action.id)
         case 'DELETE_TODO':
             return deleteTodo(state)(action.id)
+        default:
+            return state
+    }
+}
+
+export const searchReducer = (state: string = initialState.searchTerm , action: TodoActions) => {
+    switch (action.type) {
         case 'SEARCH_TODO':
-            return searchTodo(state)(action.term)
+            return action.term
         default:
             return state
     }
