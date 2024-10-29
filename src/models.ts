@@ -8,6 +8,5 @@ export type Todo = {
 
 export type AppState = {
     todos: Todo[],
-    filter: 'all' | 'completed' | 'uncompleted'
     searchTerm: string
 }

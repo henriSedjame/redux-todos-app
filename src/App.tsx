@@ -25,7 +25,6 @@ function App() {
         completed : false
       }
     ],
-    filter: 'all',
     searchTerm: ''
   })
 
