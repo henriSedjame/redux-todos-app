@@ -10,17 +10,29 @@ export type AppState = {
 }
 
 export const initialState: AppState = {
-    todos: [
-        {
-            id: 1,
-            label: 'Learn TypeScript',
-            completed: false
-        },
-        {
-            id: 2,
-            label: 'Learn React',
-            completed: true
-        }
-    ],
+    todos: [],
     searchTerm: ''
+}
+
+export const fakeApi = {
+    loadTodos: async () : Promise<Todo[]> => {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        return [
+            {
+                id: 1,
+                label: 'Prepare breakfast',
+                completed: false
+            },
+            {
+                id: 2,
+                label: 'Go to the gym',
+                completed: true
+            },
+            {
+                id: 3,
+                label: 'Work on the project',
+                completed: false
+            }
+        ]
+    }
 }

@@ -1,5 +1,5 @@
-import {initialState, Todo} from "./state.ts";
-import {createSlice} from "@reduxjs/toolkit";
+import {fakeApi, initialState, Todo} from "./state.ts";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 const addTodo = (state: Todo[]) => (label: string): Todo[] => ([...state, {
     id: state.length + 1,
@@ -16,6 +16,12 @@ const deleteTodo = (state: Todo[]) => (id: number): Todo[] => {
     return todos.map((todo, index) => ({...todo, id: index + 1}))
 }
 
+export const loadTodos = createAsyncThunk(
+    'todos/loadTodos',
+    async () => await fakeApi.loadTodos()
+        .then(todos => todos)
+)
+
 export const todoSlice = createSlice({
     name: 'todos',
     initialState: initialState.todos,
@@ -23,6 +29,18 @@ export const todoSlice = createSlice({
         addTodo: (state, action ) => addTodo(state)(action.payload),
         toggleTodo: (state, action) => toggleTodo(state)(action.payload),
         deleteTodo: (state, action) => deleteTodo(state)(action.payload)
+    },
+    extraReducers: builder => {
+        builder.addCase(loadTodos.pending,
+            () => {console.log('loading todos...')})
+
+        builder.addCase(loadTodos.fulfilled,
+            (_state, action) => action.payload
+        )
+
+        builder.addCase(loadTodos.rejected, () => {
+            alert('error loading todos')
+        })
     }
 })
 
