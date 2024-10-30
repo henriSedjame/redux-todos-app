@@ -5,6 +5,7 @@ import {AppState} from "./models.ts";
 import {TodoList} from "./components/TodoList.tsx";
 import {SearchBar} from "./components/SearchBar.tsx";
 import {AddInput} from "./components/AddInput.tsx";
+import {Title} from "./components/Title.tsx";
 
 function App() {
 
@@ -66,6 +67,8 @@ function App() {
 
   return (
     <>
+      <Title />
+
       <SearchBar search={onSearch}/>
 
       <TodoList todos={filterTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>

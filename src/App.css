@@ -4,6 +4,10 @@
   padding: 2rem;
   text-align: center;
 }
+.title {
+  color: #726d8a;
+  margin-bottom: 50px;
+}
 
 .todo_item {
   width: 300px;
