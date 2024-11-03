@@ -24,6 +24,8 @@ export const todoReducer = (state: Todo[] = initialState.todos, action: TodoActi
             return toggleTodo(state)(action.id)
         case 'DELETE_TODO':
             return deleteTodo(state)(action.id)
+        case 'LOAD_TODOS':
+            return action.todos
         default:
             return state
     }
@@ -33,6 +35,15 @@ export const searchReducer = (state: string = initialState.searchTerm , action: 
     switch (action.type) {
         case 'SEARCH_TODO':
             return action.term
+        default:
+            return state
+    }
+}
+
+export const loadingReducer = (state: boolean = initialState.loading , action: TodoActions) => {
+    switch (action.type) {
+        case 'LOADING':
+            return action.loading
         default:
             return state
     }
