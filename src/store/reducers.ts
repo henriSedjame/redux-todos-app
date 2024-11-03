@@ -19,7 +19,7 @@ const deleteTodo = (state: Todo[]) => (id: number): Todo[] => {
 export const loadTodos = createAsyncThunk(
     'todos/loadTodos',
     async () => await fakeApi.loadTodos()
-        .then(todos => todos)
+        //.then(todos => todos)
 )
 
 export const todoSlice = createSlice({

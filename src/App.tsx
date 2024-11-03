@@ -4,18 +4,18 @@ import {SearchBar} from "./components/SearchBar.tsx";
 import {AddInput} from "./components/AddInput.tsx";
 import {Title} from "./components/Title.tsx";
 import {useEffect} from "react";
-import {useDispatch} from "react-redux";
 import {loadTodos} from "./store/reducers.ts";
+import {appDispatch} from "./store/hooks.ts";
 
 
 function App() {
 
-        const dispatch = useDispatch()
+    const dispatch = appDispatch()
 
-    useEffect(() => {
+    useEffect(() =>  {
 
-       // @ts-expect-error(...)
         dispatch(loadTodos())
+
     })
 
     return (
@@ -26,7 +26,7 @@ function App() {
 
             <TodoList/>
 
-            <AddInput />
+            <AddInput/>
         </>
     )
 }
